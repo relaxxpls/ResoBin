@@ -78,12 +78,13 @@ const Login = () => {
   const handleChange = ({ target }) =>
     setUser({ ...user, [target.name]: target.value })
 
+  const history = useHistory()
   const handleSubmit = (event) => {
     event.preventDefault()
+    history.push('/dashboard')
     if (validCheck(user)) dispatch(loginAction(user))
   }
 
-  const history = useHistory()
   if (isAuthenticated) history.push('/dashboard')
 
   return (
