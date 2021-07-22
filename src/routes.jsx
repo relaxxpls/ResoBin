@@ -38,7 +38,7 @@ export const AppRoutes = () => {
     <Switch>
       <Route exact path="/login" component={Login} />
       <Route path="/404" component={NotFound} />
-      <PrivateRoute path="/" component={Dashboard} />
+      <Route path="/" component={Dashboard} />
 
       {/* 404 page */}
       <Route component={NotFound} />
