@@ -13,6 +13,7 @@ module.exports = {
     'plugin:react/recommended',
     'react-app',
     'react-app/jest',
+    'plugin:promise/recommended',
     'airbnb',
     'prettier',
   ],
@@ -27,7 +28,14 @@ module.exports = {
     sourceType: 'module',
   },
 
-  plugins: ['react', 'prettier', 'import', 'jsx-a11y', 'react-hooks'],
+  plugins: [
+    'react',
+    'prettier',
+    'import',
+    'jsx-a11y',
+    'react-hooks',
+    'promise',
+  ],
 
   rules: {
     // Allow debugger and console statement in development
