@@ -1,9 +1,13 @@
-import { Col, Divider, Row } from 'antd'
+import { Col, Divider, Row, Tabs } from 'antd'
 import styled from 'styled-components/macro'
 
 import { device, fontSize } from 'styles/responsive'
 
+import CourseReviews from './CourseReview'
+
 const CoursePageBody = ({ courseData }) => {
+  const reviewCount = 2
+
   return (
     <Container>
       <CourseCode>{courseData.Code}</CourseCode>
@@ -37,6 +41,26 @@ const CoursePageBody = ({ courseData }) => {
           <CenterText>{courseData.TotalCredits}</CenterText>
         </Col>
       </Row>
+      <Divider />
+
+      <Tabs
+        defaultActiveKey="1"
+        centered
+        size="large"
+        style={{
+          color: `${({ theme }) => theme.textColor}`,
+          fontWeight: 600,
+          fontSize: '24px',
+        }}
+        type="card"
+      >
+        <Tabs.TabPane tab={`Reviews (${reviewCount})`} key="1">
+          <CourseReviews />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Resources" key="2">
+          Resources
+        </Tabs.TabPane>
+      </Tabs>
     </Container>
   )
 }
@@ -48,7 +72,7 @@ const Container = styled.div`
   margin: 0 0.75rem 0.75rem;
   border-radius: ${({ theme }) => theme.borderRadius};
   color: ${({ theme }) => theme.textColor};
-  background: ${({ theme }) => theme.darksecondary};
+  background: ${({ theme }) => theme.secondary};
 
   @media ${device.max.md} {
     margin: 1rem 0.75rem;
