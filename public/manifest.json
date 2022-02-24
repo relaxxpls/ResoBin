@@ -1,5 +1,5 @@
 {
-  "name": "ResoBin by DevCom, IIT Bombay",
+  "name": "ResoBin - IIT Bombay",
   "short_name": "ResoBin",
   "description": "Your true study buddy.",
   "icons": [
@@ -12,14 +12,24 @@
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/maskable-1024x1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "start_url": "/?source=pwa",
+  "start_url": "/timetable?source=pwa",
   "background_color": "#1b1728",
   "display": "standalone",
   "scope": "/",
   "theme_color": "#ffffff",
   "shortcuts": [
+    {
+      "name": "Home",
+      "url": "/?source=pwa"
+    },
     {
       "short_name": "Courses",
       "name": "Course Finder",
@@ -28,7 +38,7 @@
     },
     {
       "short_name": "Timetable",
-      "name": "My timetable",
+      "name": "My Timetable",
       "description": "View and modify timetable.",
       "url": "/timetable?source=pwa"
     }
@@ -36,5 +46,6 @@
   "lang": "en-US",
   "categories": [
     "education"
-  ]
+  ],
+  "orientation": "portrait"
 }
