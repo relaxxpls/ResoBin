@@ -61,27 +61,27 @@ const CourseFinderFilterForm = ({ setLoading }) => {
     deleteQueryString(...qsFields, 'p')
   }
 
-  const handleFilterUpdate = (_, allFields) => {
+  const handleFilterUpdate = (_, allValues) => {
     setLoading(true)
     deleteQueryString('p')
 
-    if (allFields?.credits?.[0] !== 2)
-      setQueryString('credits_min', allFields.credits[0])
+    if (allValues?.credits?.[0] !== 2)
+      setQueryString('credits_min', allValues.credits[0])
     else deleteQueryString('credits_min')
 
-    if (allFields?.credits?.[1] !== 9)
-      setQueryString('credits_max', allFields.credits[1])
+    if (allValues?.credits?.[1] !== 9)
+      setQueryString('credits_max', allValues.credits[1])
     else deleteQueryString('credits_max')
 
-    setQueryString('department', allFields.department)
-    setQueryString('semester', allFields.semester)
-    setQueryString('tags', allFields.tags)
-    setQueryString('slots', allFields.slots)
+    setQueryString('department', allValues.department)
+    setQueryString('semester', allValues.semester)
+    setQueryString('tags', allValues.tags)
+    setQueryString('slots', allValues.slots)
 
-    if (allFields.halfsem) setQueryString('halfsem', 'true')
+    if (allValues.halfsem) setQueryString('halfsem', 'true')
     else deleteQueryString('halfsem')
 
-    if (allFields.running) setQueryString('running', 'true')
+    if (allValues.running) setQueryString('running', 'true')
     else deleteQueryString('running')
   }
 

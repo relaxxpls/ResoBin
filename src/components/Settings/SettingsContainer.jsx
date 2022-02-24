@@ -5,7 +5,7 @@ import styled from 'styled-components/macro'
 import { Aside, CardSplit, Form, toast, Typography } from 'components/shared'
 import { PageHeading, PageTitle } from 'components/shared/Layout'
 import { logoutAction } from 'store/authSlice'
-import { selectSettings, setTheme, setTracking } from 'store/settingsSlice'
+import { selectSettings, setSettings } from 'store/settingsSlice'
 
 import Profile from './Profile'
 
@@ -20,9 +20,16 @@ const SettingsContainer = () => {
   const settings = useSelector(selectSettings)
   const [form] = Form.useForm()
 
-  const handleSettingsChange = (values) => {
-    if (values.theme !== undefined) dispatch(setTheme(values.theme))
-    if (values.tracking !== undefined) dispatch(setTracking(values.tracking))
+  const handleSettingsChange = async (changedValues, allValues) => {
+    let { notifications } = allValues
+    if (
+      changedValues?.notifications &&
+      Notification?.permission !== 'granted'
+    ) {
+      notifications = false
+    }
+
+    dispatch(setSettings({ ...allValues, notifications }))
   }
 
   const handleLogout = async () => {
@@ -60,6 +67,45 @@ const SettingsContainer = () => {
         <CardSplit
           main={
             <>
+              <Heading>Notifications</Heading>
+              <SubHeading>
+                Get notifications before your lecture starts! We might also send
+                you occasional updates about new features on ResoBin.
+              </SubHeading>
+            </>
+          }
+          sub={
+            <Form.Item
+              name="notifications"
+              valuePropName="checked"
+              rules={[
+                {
+                  validator: async (_, value) => {
+                    if (value === false) return
+
+                    if (!('Notification' in window))
+                      throw new Error(
+                        'Device does not support web notifications.'
+                      )
+
+                    const permission = await Notification.requestPermission()
+                    if (permission !== 'granted')
+                      throw new Error(
+                        'Notifications were not enabled. Please enable them in your browser settings.'
+                      )
+                  },
+                },
+              ]}
+            >
+              <Switch />
+            </Form.Item>
+          }
+          subWidth="10rem"
+        />
+
+        <CardSplit
+          main={
+            <>
               <Heading>Privacy</Heading>
               <SubHeading>
                 We collect anonymous, aggregated usage information on ResoBin -
@@ -77,7 +123,7 @@ const SettingsContainer = () => {
               <Switch />
             </Form.Item>
           }
-          subWidth="5rem"
+          subWidth="10rem"
         />
 
         <CardSplit
@@ -87,7 +133,7 @@ const SettingsContainer = () => {
               Logout
             </StyledButton>
           }
-          subWidth="5rem"
+          subWidth="10rem"
         />
       </Form>
 
