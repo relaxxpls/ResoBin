@@ -6,7 +6,6 @@ const settingsSlice = createSlice({
   initialState: {
     theme: 'device',
     tracking: true,
-    isDropdownActive: false,
   },
 
   reducers: {
@@ -17,22 +16,17 @@ const settingsSlice = createSlice({
     setTracking: (state, { payload }) => {
       state.tracking = payload
     },
-
-    setDropdown: (state, { payload }) => {
-      state.isDropdownActive = payload
-    },
   },
 })
 
 // ? actions
 // * same names as that set inside reducers key of createSlice
-export const { setTheme, setDropdown, setTracking } = settingsSlice.actions
+export const { setTheme, setTracking } = settingsSlice.actions
 
 // ? selectors
 // * naming convention: https://twitter.com/_jayphelps/status/739905438116806656
 // * avoid using inline selectors
 export const selectSettings = (state) => state.settings
-export const selectIsDropdownActive = (state) => state.settings.isDropdownActive
 export const selectTheme = (state) => {
   const { theme } = state.settings
   if (theme !== 'device') return theme

@@ -4,26 +4,26 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 
 import { useResponsive } from 'hooks'
-import { selectIsDropdownActive, setDropdown } from 'store/settingsSlice'
+import { selectDropdownStatus, updateDropdownStatus } from 'store/userSlice'
 
 const FilterFloatButton = () => {
   const [Icon, setIcon] = useState(Filter)
   const { isDesktop } = useResponsive()
-  const isDropdownActive = useSelector(selectIsDropdownActive)
+  const dropdownStatus = useSelector(selectDropdownStatus)
   const dispatch = useDispatch()
 
   // ? show or hide dropdown filters state
-  const toggleFilter = () => dispatch(setDropdown(!isDropdownActive))
+  const toggleFilter = () => dispatch(updateDropdownStatus(!dropdownStatus))
 
   // ? dropdown disabled on wide screens
   useEffect(() => {
     if (isDesktop) {
-      dispatch(setDropdown(false))
+      dispatch(updateDropdownStatus(false))
       setIcon(null)
     } else {
-      setIcon(isDropdownActive ? X : Filter)
+      setIcon(dropdownStatus ? X : Filter)
     }
-  }, [isDropdownActive, isDesktop, dispatch])
+  }, [dropdownStatus, isDesktop, dispatch])
 
   return (
     Icon && (

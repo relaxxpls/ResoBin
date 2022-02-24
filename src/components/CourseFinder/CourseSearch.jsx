@@ -6,8 +6,8 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 
-import { useQueryString, useResponsive } from 'hooks'
-import { selectIsDropdownActive } from 'store/settingsSlice'
+import { useQueryString } from 'hooks'
+import { selectDropdownStatus } from 'store/userSlice'
 
 import {
   CourseFinderFilterDropdown,
@@ -16,9 +16,8 @@ import {
 
 // ? Disable filter will disable the filter entirely, show filter will trigger on/off animation
 const CourseSearch = ({ loading, setLoading }) => {
-  const { isDesktop } = useResponsive()
   const { deleteQueryString, getQueryString, setQueryString } = useQueryString()
-  const showFilter = useSelector(selectIsDropdownActive)
+  const dropdownStatus = useSelector(selectDropdownStatus)
 
   const [search, setSearch] = useState(getQueryString('q'))
 
@@ -33,11 +32,8 @@ const CourseSearch = ({ loading, setLoading }) => {
   return (
     <>
       <SearchContainer>
-        <CourseFinderFilterDropdown
-          showFilter={showFilter && isDesktop}
-          setLoading={setLoading}
-        />
-        {showFilter && isDesktop && <Overlay />}
+        <CourseFinderFilterDropdown setLoading={setLoading} />
+        <Overlay hidden={!dropdownStatus} />
 
         <StyledInput
           size="large"

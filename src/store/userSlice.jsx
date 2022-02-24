@@ -36,6 +36,7 @@ const userSlice = createSlice({
     resourcesRequested: [],
     timetable: [],
     user: {},
+    dropdownStatus: false,
   },
 
   reducers: {
@@ -56,6 +57,10 @@ const userSlice = createSlice({
       const index = state.timetable.indexOf(payload)
       if (index === -1) state.timetable.push(payload)
       else state.timetable.splice(index, 1)
+    },
+
+    updateDropdownStatus: (state, { payload }) => {
+      state.dropdownStatus = payload
     },
   },
 
@@ -78,9 +83,6 @@ const userSlice = createSlice({
         state.user = payload.user
         state.loading = false
       })
-      // .addCase(getProfileAction.loading, (state) => {
-      //   state.loading = true
-      // })
       .addCase(getProfileAction.rejected, (state) => {
         state.loading = false
       })
@@ -94,8 +96,12 @@ const userSlice = createSlice({
 })
 
 // ? actions
-export const { updateFavourite, updateReviewsVoted, updateTimetable } =
-  userSlice.actions
+export const {
+  updateFavourite,
+  updateReviewsVoted,
+  updateTimetable,
+  updateDropdownStatus,
+} = userSlice.actions
 
 // ? selectors
 // * get all favourites
@@ -104,6 +110,7 @@ export const selectUserLoading = (state) => state.user.loading
 export const selectFavouriteCourses = (state) => state.user.favoriteCourses
 export const selectReviewsVoted = (state) => state.user.reviewsVoted
 export const selectAllTimetable = (state) => state.user.timetable
+export const selectDropdownStatus = (state) => state.user.dropdownStatus
 
 // * get if a course is a favourite or not
 export const selectFavouriteStatus = (code) =>

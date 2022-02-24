@@ -4,7 +4,7 @@ import styled from 'styled-components/macro'
 
 import { Divider } from 'components/shared'
 import { useQueryString } from 'hooks'
-import { selectIsDropdownActive } from 'store/settingsSlice'
+import { selectDropdownStatus } from 'store/userSlice'
 import { device } from 'styles/responsive'
 
 import CourseFinderFilterForm, { filterKeys } from './CourseFinderFilterForm'
@@ -24,17 +24,18 @@ export const ClearAll = styled.button`
 
 const CourseFinderFilterDropdown = ({ setLoading }) => {
   const { deleteQueryString } = useQueryString()
-  const showFilter = useSelector(selectIsDropdownActive)
+  const dropdownStatus = useSelector(selectDropdownStatus)
 
   useEffect(() => {
-    document.body.style.overflow = showFilter ? 'hidden' : 'auto'
+    document.body.style.overflow = dropdownStatus ? 'hidden' : 'auto'
+
     return () => {
       document.body.style.overflow = 'auto'
     }
-  }, [showFilter])
+  }, [dropdownStatus])
 
   return (
-    <ContainerDropdown showFilter={showFilter}>
+    <ContainerDropdown showFilter={dropdownStatus}>
       <Header>
         <Title>Filter</Title>
         <ClearAll onClick={() => deleteQueryString(...filterKeys)}>
@@ -44,7 +45,7 @@ const CourseFinderFilterDropdown = ({ setLoading }) => {
 
       <Divider margin="0.75rem 0" />
 
-      <ListDropdown showFilter={showFilter}>
+      <ListDropdown showFilter={dropdownStatus}>
         <CourseFinderFilterForm setLoading={setLoading} />
       </ListDropdown>
     </ContainerDropdown>
