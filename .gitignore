@@ -1,6 +1,7 @@
 # Personal Template
 *.temp
 *.old
+build-app/
 
 # Local Netlify folder
 .netlify
