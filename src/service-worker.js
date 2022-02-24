@@ -46,9 +46,8 @@ registerRoute(({ request, url }) => {
   return true
 }, createHandlerBoundToURL(`${process.env.PUBLIC_URL}/index.html`))
 
-// An example runtime caching route for requests that aren't handled by the
-// precache, in this case same-origin .png requests like those from in public/
-// Customize this strategy as needed, e.g., by changing to CacheFirst.
+// An example runtime caching route for requests that aren't handled by the precache,
+// in this case same-origin .png requests like those from in 'public/'.
 registerRoute(
   ({ url }) =>
     url.origin === self.location.origin && url.pathname.endsWith('.png'),
@@ -71,3 +70,18 @@ self.addEventListener('message', (event) => {
 })
 
 // Any other custom service worker logic can go here.
+
+self.addEventListener('push', async (event) => {
+  const data = event.data.json()
+  const { title, body } = data
+
+  const options = {
+    body,
+    icon: '/maskable-512x512.png',
+    vibrate: [200, 100, 200, 100, 200, 100, 200],
+    tag: 'resobin-timetable-notification',
+    requireInteraction: true,
+  }
+
+  event.waitUntil(self.registration.showNotification(title, options))
+})

@@ -1,5 +1,5 @@
 {
-  "name": "ResoBin - IIT Bombay",
+  "name": "ResoBin",
   "short_name": "ResoBin",
   "description": "Your true study buddy.",
   "icons": [
@@ -43,7 +43,7 @@
       "url": "/timetable?source=pwa"
     }
   ],
-  "lang": "en-US",
+  "lang": "en-IN",
   "categories": [
     "education"
   ],
